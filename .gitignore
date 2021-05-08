@@ -1,5 +1,5 @@
 ### BACKEND FILES
-*.env/
+/backend/.env/
 __pycache__
 .DS_Store
 *.pyc
