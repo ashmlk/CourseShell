@@ -18,7 +18,7 @@ class UserTestCase(TestCase):
         james = User.objects.get(first_name="james", last_name="adams", email="jamesadams@gmail.com")
         bobby = User.objects.get(first_name="bobby", last_name="joe", email="bobbyjoe.78@gmail.com")
         self.assertTrue(len(james.get_username()) > 0)
-        self.assertTrue(len(bobby).get_username()) > 0)
+        self.assertTrue(len(bobby.get_username()) > 0)
 
     def test_user_empty_username_unique_after_signals(self):
         """ Users will have unique usernames even their usernames were set to NULL pre_save """
