@@ -17,7 +17,7 @@ jobs:
         include:
           - db: postgres
             db_user: cli_db_user
-            db_password: 'password'
+            db_password: ''
 
     steps:
     - uses: actions/checkout@v2
