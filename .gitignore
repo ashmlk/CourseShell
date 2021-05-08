@@ -1,0 +1,14 @@
+### BACKEND FILES
+/backend/venv
+/backend/DS_Store
+__pycache__
+.DS_Store
+*.pyc
+
+### FRONTEND FILES
+node_modules/
+.DS_Store
+
+# env files
+/frontend/.env
+/frontend/.env.local
