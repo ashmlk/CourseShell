@@ -44,7 +44,9 @@ jobs:
         pip install -r backend/courseshell_backend/requirements.txt
     - name: Run Tests
       env:
-        DB: ${{ matrix.db }}
+        SECRET_KEY: vz@h6kziphf$m&xxu4$dfe4bt6h8_a_!^54yup$rk*_93d1x+h
+        DEV_ENV: dev
+        DB_NAME: ${{ matrix.db }}
         DB_HOST: 127.0.0.1
         DB_PORT: ${{ matrix.db_port }}
         DB_PASSWORD: db_password_courseshell_pipeline
