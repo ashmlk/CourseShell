@@ -1,7 +1,8 @@
 import os
 from .common import *
+from decouple import config
 
-environment = os.environ.get("DEV_ENV")
+environment = config('DEV_ENV')
 
 if environment == "dev": #assuming value of DEV_ENV is 'development'
     from .dev import *
