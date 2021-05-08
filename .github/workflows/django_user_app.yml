@@ -24,11 +24,10 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip freeze > requirements.txt
-        pip install -r requirements.txt
+        pip install -r courseshell_backend/requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test test user.tests.test_models
-        python manage.py test test user.tests.test_views
-        python manage.py test test user.tests.test_graphql
-        python manage.py test test user.tests.test_serializers
+        python courseshell_backend/manage.py test test user.tests.test_models
+        python courseshell_backend/manage.py test test user.tests.test_views
+        python courseshell_backend/manage.py test test user.tests.test_graphql
+        python courseshell_backend/manage.py test test user.tests.test_serializers
