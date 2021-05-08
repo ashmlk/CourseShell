@@ -17,7 +17,7 @@ jobs:
         include:
           - db: postgres
             db_user: cli_db_user
-            db_password: ''
+            db_password: 'password'
 
     steps:
     - uses: actions/checkout@v2
@@ -30,7 +30,8 @@ jobs:
       if: matrix.db == 'postgres'
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres createuser -s cli_db_user
+        sudo -u postgres
+        psql -c "create role cli_db_user with login password 'password';"
 
     - name: Install Dependencies
       run: |
