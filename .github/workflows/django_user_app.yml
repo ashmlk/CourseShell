@@ -27,7 +27,7 @@ jobs:
         pip install -r courseshell_backend/requirements.txt
     - name: Run Tests
       run: |
-        python courseshell_backend/manage.py test test user.tests.test_models
-        python courseshell_backend/manage.py test test user.tests.test_views
-        python courseshell_backend/manage.py test test user.tests.test_graphql
-        python courseshell_backend/manage.py test test user.tests.test_serializers
+        python backend/courseshell_backend/manage.py test test user.tests.test_models
+        python backend/courseshell_backend/manage.py test test user.tests.test_views
+        python backend/courseshell_backend/manage.py test test user.tests.test_graphql
+        python backend/courseshell_backend/manage.py test test user.tests.test_serializers
