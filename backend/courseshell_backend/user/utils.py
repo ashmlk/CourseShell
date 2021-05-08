@@ -1,3 +1,5 @@
+import random
+
 def create_username(email):
     
     rand = random.getrandbits(64)
