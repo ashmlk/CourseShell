@@ -7,3 +7,4 @@ urlpatterns = [
     path('rest-auth/apple/', GoogleLogin.as_view(), name='apple_login'),
     path('rest-auth/github/', GoogleLogin.as_view(), name='github_login')
 ]
+

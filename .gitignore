@@ -1,6 +1,5 @@
 ### BACKEND FILES
-/backend/venv
-/backend/DS_Store
+venv
 __pycache__
 .DS_Store
 *.pyc
