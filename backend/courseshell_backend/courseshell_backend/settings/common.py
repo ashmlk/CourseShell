@@ -46,6 +46,8 @@ INSTALLED_APPS = [
 
 
 AUTH_USER_MODEL = 'user.User'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_UNIQUE_EMAIL = True
 USER_MODEL_MAX_USERNAME_LENGTH = 30
 
 MIDDLEWARE = [
@@ -120,7 +122,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -170,6 +171,10 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+ 'django.contrib.auth.backends.ModelBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
