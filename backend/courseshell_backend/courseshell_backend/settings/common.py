@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     
 ]
 
+
 AUTH_USER_MODEL = 'user.User'
 USER_MODEL_MAX_USERNAME_LENGTH = 30
 
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'courseshell_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'courseshell',
+        'NAME': 'courseshell_db',
         'USER': 'root',
         'PASSWORD': 'password',
         'HOST': 'localhost',
@@ -189,13 +190,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-import allauth.app_settings
-allauth.app_settings.SOCIALACCOUNT_ENABLED = True
-
-if os['DEV_ENV']:
-    DJANGO_SETTINGS_MODULE = 'courseshell_backend.settings.dev'
-else:
-    DJANGO_SETTINGS_MODULE = 'courseshell_backend.settings.prod'
     
 
 

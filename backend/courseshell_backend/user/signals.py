@@ -21,4 +21,3 @@ def user_signed_up_(request, user, **kwargs):
         user.save()
   
     
-    
