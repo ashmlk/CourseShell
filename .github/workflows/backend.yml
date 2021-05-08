@@ -16,9 +16,8 @@ jobs:
         python-version: [3.6, 3.7, 3.8]
         include:
           - db: postgres
-            db_user: root
+            db_user: cli_db_user
             db_password: 'password'
-            db_port: ''
 
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +30,7 @@ jobs:
       if: matrix.db == 'postgres'
       run: |
         sudo systemctl start postgresql.service
-        sudo -u postgres createuser -s root
+        sudo -u postgres createuser -s cli_db_user
 
     - name: Install Dependencies
       run: |
@@ -44,9 +43,9 @@ jobs:
         DEV_ENV: dev
         DB_NAME: ${{ matrix.db }}
         DB_HOST: 127.0.0.1
-        DB_PORT: ${{ matrix.db_port }}
         DB_USER: ${{ matrix.db_user }}
         DB_PASSWORD: ${{ matrix.db_password }}
+        DB_PORT: 5432
       run: |
         python backend/courseshell_backend/manage.py test test user.tests.test_models
         python backend/courseshell_backend/manage.py test test user.tests.test_views
