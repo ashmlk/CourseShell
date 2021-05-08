@@ -1,13 +1,15 @@
 ### BACKEND FILES
-venv
+/backend/.env/
 __pycache__
 .DS_Store
 *.pyc
-
+*.bak
 ### FRONTEND FILES
 node_modules/
 .DS_Store
-
+package-lock.json
+*.log
+yarn.lock
 # env files
 /frontend/.env
 /frontend/.env.local

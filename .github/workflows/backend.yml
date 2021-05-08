@@ -13,7 +13,24 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        db: [postgres]
+        python-version: [3.6, 3.7, 3.8]
+        include:
+          - db: postgres
+            db_port: 5432
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: db_password_xyz
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
     - uses: actions/checkout@v2
@@ -26,6 +43,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r backend/courseshell_backend/requirements.txt
     - name: Run Tests
+      env:
+        SECRET_KEY: vz@h6kziphf$m&xxu4$dfe4bt6h8_a_!^54yup$rk*_93d1x+h
+        DEV_ENV: dev
+        DB_NAME: ${{ matrix.db }}
+        DB_HOST: 127.0.0.1
+        DB_PORT: ${{ matrix.db_port }}
+        DB_USER: postgres
+        DB_PASSWORD: db_password_xyz
       run: |
         python backend/courseshell_backend/manage.py test test user.tests.test_models
         python backend/courseshell_backend/manage.py test test user.tests.test_views
