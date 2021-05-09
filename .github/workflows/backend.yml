@@ -59,4 +59,5 @@ jobs:
         DB_PASSWORD: password
         DB_PORT: 5432
       run: |
-        python backend/courseshell_backend/manage.py test test user.tests.test_models
+        python backend/courseshell_backend/manage.py test user.tests.test_models
+        python backend/courseshell_backend/manage.py test course.tests.test_models
