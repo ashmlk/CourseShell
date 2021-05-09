@@ -45,7 +45,7 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DEV_ENV: dev
-        DB_NAME: ${{ matrix.db }}
+        DB_NAME: github_actions
         DB_HOST: 127.0.0.1
         DB_USER: postgres
         DB_PASSWORD: password
