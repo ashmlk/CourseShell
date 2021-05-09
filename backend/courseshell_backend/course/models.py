@@ -13,5 +13,5 @@ class Course(BaseModel):
 
     def save(self, *args, **kwargs):
         self.code = self.code.replace(' ', '').upper()
-        super(User, self).save(*args, **kwargs)
+        super(Course, self).save(*args, **kwargs)
     
