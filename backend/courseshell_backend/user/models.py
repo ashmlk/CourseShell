@@ -6,6 +6,7 @@ class User(AbstractUser):
     
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     university = models.ForeignKey("university.University", null=True, verbose_name=_("students"), on_delete=models.DO_NOTHING)
+    courses = models.ManyToManyField("course.Course", verbose_name=_("courses"))
     
     def save(self, *args, **kwargs):
         self.username = self.username.strip().lower()
