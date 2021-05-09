@@ -43,7 +43,7 @@ jobs:
       run: python backend/courseshell_backend/manage.py migrate
     - name: Run Tests
       env:
-        SECRET_KEY: ${{ secrets.SecretKey }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DEV_ENV: dev
         DB_NAME: github_actions
         DB_HOST: 127.0.0.1
