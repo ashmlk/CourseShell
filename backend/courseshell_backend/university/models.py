@@ -1,6 +1,6 @@
 from django.db import models
-
-class University(models.Model):
+from base.models import BaseModel
+class University(BaseModel):
     name = models.CharField(max_length=200,)
     country = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
