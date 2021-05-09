@@ -4,6 +4,7 @@ __pycache__
 .DS_Store
 *.pyc
 *.bak
+/backend/courseshell_backend/data.json
 ### FRONTEND FILES
 node_modules/
 .DS_Store
@@ -13,3 +14,4 @@ yarn.lock
 # env files
 /frontend/.env
 /frontend/.env.local
+.next/

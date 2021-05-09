@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    
+    # graphql
+    'graphene_django',
 
     # allauth
     'allauth',
@@ -92,7 +95,7 @@ DATABASES = {
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST', default='localhost'),
-        'PORT':config('DB_PORT')  
+        'PORT':config('DB_PORT', default=None)  
     } 
 }
 
@@ -195,6 +198,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+GRAPHENE = {   
+    "SCHEMA": "courseshell_backend.schema.schema"
+}
 
     
 
