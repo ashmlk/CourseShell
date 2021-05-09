@@ -48,10 +48,10 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DEV_ENV: dev
-        DB_NAME: ${{ matrix.github_actions }}
+        DB_NAME: ${{ matrix.db }}
         DB_HOST: 127.0.0.1
         DB_USER: postgres
         DB_PASSWORD: password
-        DB_PORT: ${{ matrix/github_actions }}
+        DB_PORT: ${{ matrix.db_port }}
       run: |
         python backend/courseshell_backend/manage.py test test user.tests.test_models
