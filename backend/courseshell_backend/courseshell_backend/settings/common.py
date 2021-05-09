@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     # apps
+    'base.apps.BaseConfig',
     'user.apps.UserConfig',
     'course.apps.CourseConfig',
     'university.apps.UniversityConfig',

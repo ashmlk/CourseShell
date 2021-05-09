@@ -2,9 +2,9 @@ import os
 from .common import *
 from decouple import config
 
-environment = config('DEV_ENV')
+environment = config('DEV_ENV', cast=str)
 
-if environment == "dev": #assuming value of DEV_ENV is 'development'
+if environment == "dev":
     from .dev import *
 elif environment == "staging":
     from .staging import *
