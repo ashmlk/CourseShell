@@ -10,4 +10,8 @@ class Course(BaseModel):
 
     def __str__(self):
         return '%s - %s' % (self.code, self.university)
+
+    def save(self, *args, **kwargs):
+        self.code = self.code.replace(' ', '').upper()
+        super(User, self).save(*args, **kwargs)
     
