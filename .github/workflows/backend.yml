@@ -1,4 +1,5 @@
-name: Django CI
+
+name: Courseshell CI
 
 on:
   push:
@@ -9,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       max-parallel: 4
       matrix:
@@ -20,10 +21,10 @@ jobs:
             db_port: 5432
     services:
       postgres:
-        image: postgres
+        image: postgres:13
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: db_password_xyz
+          POSTGRES_PASSWORD: password
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -31,7 +32,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -48,11 +48,8 @@ jobs:
         DEV_ENV: dev
         DB_NAME: ${{ matrix.db }}
         DB_HOST: 127.0.0.1
-        DB_PORT: ${{ matrix.db_port }}
         DB_USER: postgres
-        DB_PASSWORD: db_password_xyz
+        DB_PASSWORD: password
+        DB_PORT: ${{ matrix.db_port }}
       run: |
         python backend/courseshell_backend/manage.py test test user.tests.test_models
-        python backend/courseshell_backend/manage.py test test user.tests.test_views
-        python backend/courseshell_backend/manage.py test test user.tests.test_graphql
-        python backend/courseshell_backend/manage.py test test user.tests.test_serializers
