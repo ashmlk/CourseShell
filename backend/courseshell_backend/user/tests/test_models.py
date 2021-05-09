@@ -3,9 +3,7 @@ from user.models import User
 
 class UserTestCase(TestCase):
     
-    obj1 = None
-    obj2 = None
-    obj3 = None
+    obj1 = obj2 = obj3 = obj4 = None
 
     def setUp(self):
         self.obj1 = User.objects.create(first_name="james", last_name="adams", email="jamesadams@gmail.com")
@@ -28,7 +26,7 @@ class UserTestCase(TestCase):
         
     def test_user_has_lowercase_username(self):
         """ Check if user's username is always set to lowercase """
-        self.assertTrue(self.obj3.get_username().islower())
+        self.assertTrue(self.obj4.get_username().islower())
         
     def test_user_has_email(self):
         """ Users should always have email """

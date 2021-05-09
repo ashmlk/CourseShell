@@ -9,9 +9,11 @@ class Course(BaseModel):
     university = models.ForeignKey("university.University", verbose_name=_("courses"), null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return '%s - %s' % (self.code, self.university)
+        return '%s - %s' % (self.code, self.university.name)
 
     def save(self, *args, **kwargs):
         self.code = self.code.replace(' ', '').upper()
         super(Course, self).save(*args, **kwargs)
+        
+        
     

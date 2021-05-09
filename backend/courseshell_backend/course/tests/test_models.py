@@ -3,9 +3,8 @@ from course.models import Course
 
 class CourseTestCase(TestCase):
     
-    obj1 = None
-    obj2 = None
-    
+    obj1 = obj2 = None
+
     def setUp(self):
         self.obj1 = Course.objects.create(code="cPs109")
         self.obj2 = Course.objects.create(code=" MTh100    ")

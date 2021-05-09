@@ -48,7 +48,9 @@ jobs:
         DB_USER: postgres
         DB_PASSWORD: password
         DB_PORT: 5432
-      run: python backend/courseshell_backend/manage.py migrate
+      run: | 
+        cd backend/courseshell_backend
+        python manage.py migrate
     - name: Run Tests
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -59,5 +61,6 @@ jobs:
         DB_PASSWORD: password
         DB_PORT: 5432
       run: |
-        python backend/courseshell_backend/manage.py test user.tests.test_models
-        python backend/courseshell_backend/manage.py test course.tests.test_models
+        cd backend/courseshell_backend
+        python manage.py test user.tests.test_models
+        python manage.py test course.tests.test_models
