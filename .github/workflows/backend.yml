@@ -64,3 +64,5 @@ jobs:
         cd backend/courseshell_backend
         python manage.py test user.tests.test_models
         python manage.py test course.tests.test_models
+        python manage.py test instructor.tests.test_models
+        python manage.py test university.tests.test_models
