@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'course.apps.CourseConfig',
     'university.apps.UniversityConfig',
-    'professor.apps.ProfessorConfig',
+    'instructor.apps.InstructorConfig',
     
     # rest framework
     'rest_framework',
