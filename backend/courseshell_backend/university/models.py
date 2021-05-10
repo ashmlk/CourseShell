@@ -14,8 +14,9 @@ class University(BaseModel):
         return self.name
     
     def save(self, *args, **kwargs):
+        self.name = self.name.strip()
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name.lower())
         super(University, self).save(*args, **kwargs)
             
                     
