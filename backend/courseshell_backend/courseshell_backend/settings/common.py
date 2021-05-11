@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'rest_auth',
     
     # graphql
+    'django_filters',
     'graphene_django',
 
     # allauth

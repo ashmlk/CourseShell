@@ -1,18 +1,24 @@
 import graphene
-
-from graphene_django import DjangoObjectType, DjangoListField 
+from graphene_django import DjangoObjectType, DjangoListField
+from graphene_django.filter import DjangoFilterConnectionField
 from .models import User
-
-
+import django_filters
+        
 class UserType(DjangoObjectType): 
     class Meta:
         model = User
         interfaces = (graphene.relay.Node,)
-        fields = "__all__"
-
+        fields = '__all__'
+        filter_fields = {
+            'username': ['exact','icontains', 'istartswith'],
+            'first_name': ['exact','icontains', 'istartswith'],
+            'last_name':['exact','icontains', 'istartswith'],
+            'uuid':['exact'],
+            'university__name':['exact','icontains','istartswith'],          
+        }
 
 class UserQuery(graphene.ObjectType):
-    all_users = graphene.List(UserType)
+    all_users = DjangoFilterConnectionField(UserType)
     user = graphene.Field(UserType, user_uuid=graphene.String())
 
     def resolve_all_users(self, info, **kwargs):
@@ -21,9 +27,7 @@ class UserQuery(graphene.ObjectType):
     def resolve_user(self, info, user_uuid):
         return User.objects.get(uuid=user_uuid)
     
-    
 class UserInput(graphene.InputObjectType):
-    id = graphene.ID()
     first_name = graphene.String()
     last_name = graphene.String() 
     username = graphene.String()
