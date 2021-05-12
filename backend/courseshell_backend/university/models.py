@@ -1,9 +1,11 @@
+import uuid
 from django.db import models
 from base.models import BaseModel
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 
 class University(BaseModel):
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField(max_length=200)
     slug = models.SlugField(_(""), max_length=254)
     country = models.CharField(max_length=200)
