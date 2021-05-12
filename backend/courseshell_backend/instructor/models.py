@@ -1,9 +1,11 @@
+import uuid
 from django.db import models
 from base.models import BaseModel
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 
 class Instructor(BaseModel):
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     slug = models.SlugField(_(""), max_length=254)

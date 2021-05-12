@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'corsheaders',
     
     # graphql
     'django_filters',
@@ -127,6 +128,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3080",
+    "http://127.0.0.1:8000"
+]
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
