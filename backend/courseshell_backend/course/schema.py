@@ -14,6 +14,7 @@ class CourseType(DjangoObjectType):
         interfaces = (graphene.relay.Node,)
         exclude = ['id']
         filter_fields = {
+          'uuid': ['exact'],
           'code': ['exact', 'icontains','istartswith'],
           'university__name': ['exact', 'icontains', 'istartswith'],
           'university__country': ['exact', 'icontains', 'istartswith']
