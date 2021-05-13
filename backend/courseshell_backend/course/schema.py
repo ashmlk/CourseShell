@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType, DjangoListField
 from graphene_django.filter import DjangoFilterConnectionField
-from .models import Course
+from .models import Course, Review
 import django_filters
 
 class CourseType(DjangoObjectType):
@@ -33,7 +33,42 @@ class CourseQuery(graphene.ObjectType):
     def resolve_all_courses(self, info, **kwargs):
         return Course.objects.all()
     
-    def resolve_course(self, info, Course_uuid):
-        return Course.object.get(uuid=Course_uuid)
+    def resolve_course(self, info, course_uuid):
+        return Course.object.get(uuid=course_uuid)
+    
+
+class ReviewType(DjangoObjectType):
+    
+    like_count = graphene.Int()
+    dislike_count = graphene.Int()
+    
+    class Meta:
+        model = Review
+        interfaces = (graphene.relay.Node,)
+        exclude = ['id']
+        filter_fields =  {
+             'uuid': ['exact'],
+             'course__code': ['exact', 'icontains','istartswith'],
+             'course__university': ['exact', 'icontains','istartswith'],
+             'user__username': ['exact', 'icontains','istartswith'],      
+        }
+        
+    def resolve_like_count(self, info, **kwargs):
+        return self.likes.count()
+    
+    def resolve_dislike_count(self, info, **kwargs):
+        return self.dislikes.count()
+    
+class ReviewQuery(graphene.ObjectType):
+    all_reviews = DjangoFilterConnectionField(ReviewType)
+    review = graphene.Field(ReviewType, review_uuid=graphene.String())
+    
+    def resolve_all_reviews(self, info, **kwargs):
+        return Review.objects.all()
+    
+    def resolve_review(self, info, review_uuid):
+        return Review.objects.get(uuid=review_uuid)
+    
+    
     
 
