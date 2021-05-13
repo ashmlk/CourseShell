@@ -8,7 +8,6 @@ import django_filters
 class UserType(DjangoObjectType): 
     
     full_name = graphene.String()
-    university = graphene.String()
     class Meta:
         model = User
         interfaces = (graphene.relay.Node,)
@@ -24,9 +23,6 @@ class UserType(DjangoObjectType):
     def resolve_full_name(self, info, **kwargs):
         return '%s %s' % (self.first_name, self.last_name)
 
-    def resolve_university(self, info, **kwargs):
-        return self.university.name
-        
 class UserQuery(graphene.ObjectType):
     all_users = DjangoFilterConnectionField(UserType)
     user = graphene.Field(UserType, user_uuid=graphene.String())
