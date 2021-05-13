@@ -8,20 +8,26 @@ import django_filters
 class UserType(DjangoObjectType): 
     
     full_name = graphene.String()
+    course_count = graphene.Int()
     class Meta:
         model = User
         interfaces = (graphene.relay.Node,)
         exclude =['id','password']
         filter_fields = {
+            'uuid':['exact'],
             'username': ['exact','icontains', 'istartswith'],
             'first_name': ['exact','icontains', 'istartswith'],
             'last_name':['exact','icontains', 'istartswith'],
-            'uuid':['exact'],
-            'university__name':['exact','icontains','istartswith'],          
+            'university__name':['exact','icontains','istartswith'],
+            'university__country': ['exact', 'icontains', 'istartswith'], 
+            'courses__code': ['exact', 'icontains', 'istartswith']         
         }
     
     def resolve_full_name(self, info, **kwargs):
         return '%s %s' % (self.first_name, self.last_name)
+    
+    def resolve_course_count(self, info, **kwargs):
+        return self.courses.count()
 
 class UserQuery(graphene.ObjectType):
     all_users = DjangoFilterConnectionField(UserType)
@@ -32,7 +38,6 @@ class UserQuery(graphene.ObjectType):
 
     def resolve_user(self, info, user_uuid):
         return User.objects.get(uuid=user_uuid)
-    
 
 class UserInput(graphene.InputObjectType):
     first_name = graphene.String()
@@ -90,7 +95,6 @@ class DeleteUser(graphene.Mutation):
     def mutate(root, info, uuid):
         user_instance = User.objects.get(uuid=uuid)
         user_instance.delete()
-
         return None
     
 class UserMutation(graphene.ObjectType):
