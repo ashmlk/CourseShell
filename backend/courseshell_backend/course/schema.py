@@ -70,5 +70,74 @@ class ReviewQuery(graphene.ObjectType):
         return Review.objects.get(uuid=review_uuid)
     
     
+class ReviewInput(graphene.InputObjectType):
+    content = graphene.String(required=True)
+    author_uuid = graphene.String(required=True)
+    course_uuid = graphene.String(required=True)
+    
+class CreateReview(graphene.Mutation):
+    class Arguments:
+        data = ReviewInput(required=True)
+    
+    review = graphene.Field(ReviewType)
+    
+    @staticmethod
+    def mutate(root, info, data=None):
+        course = Course.objects.get(uuid=data.course_uuid)
+        author = User.objects.get(uuid=data.author_uuid)
+        if author and course:       
+            review_instance = Review.objects.create(
+                course=course,
+                author=author,
+                content=data.content
+            )
+            return CreateReview(review=review_instance)
+        return CreateReview(review=None)
+
+class UpdateReview(graphene.Mutation):
+    class Arguments:
+        data = ReviewInput(required=True)
+    
+    review = graphene.Field(ReviewType)
+    
+    @staticmethod
+    def mutate(root, info, **kwargs):
+        review_instance = Review.objects.get(uuid=data.uuid)
+        
+        if review_instance:
+            review_instance.content=data.content
+            
+            return UpdateReview(review=review_instance)
+        return UpdateReview(review=None)
+    
+class DeleteReview(graphene.Mutation):
+    
+    class Arguments:
+        uuid = graphene.String() 
+    
+    review = graphene.Field(ReviewType)
+    
+    @staticmethod
+    def mutate(root, info, uuid):
+        review_instance = Review.objects.get(uuid=uuid)
+        if review_instance:
+            review_instance.delete()
+        return None
+    
+class ReviewMutation(graphene.ObjectType):
+    create_review = CreateReview.Field()
+    update_review = UpdateReview.Field()
+    delete_review = DeleteReview.Field()
+    
+    
+    
+    
+    
+        
+    
+    
+
+    
+    
     
 
