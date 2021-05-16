@@ -32,7 +32,7 @@ class InstructorType(DjangoObjectType):
         
         
 class InstructorQuery(graphene.ObjectType):
-    all_instructors = DjangoFilterConnectionField(InstructorType)
+    instructors = DjangoFilterConnectionField(InstructorType)
     instructor = graphene.Field(InstructorType, instructor_uuid=graphene.String())
     
     def resolve_all_instructors(self, info, **kwargs):

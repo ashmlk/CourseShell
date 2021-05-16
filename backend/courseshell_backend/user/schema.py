@@ -9,6 +9,7 @@ class UserType(DjangoObjectType):
     
     full_name = graphene.String()
     course_count = graphene.Int()
+    review_count = graphene.Int()
     class Meta:
         model = User
         interfaces = (graphene.relay.Node,)
@@ -28,12 +29,16 @@ class UserType(DjangoObjectType):
     
     def resolve_course_count(self, info, **kwargs):
         return self.courses.count()
+    
+    def resolve_review_count(self, info, **kwargs):
+        return self.reviews.count()
+
 
 class UserQuery(graphene.ObjectType):
-    all_users = DjangoFilterConnectionField(UserType)
+    users = DjangoFilterConnectionField(UserType)
     user = graphene.Field(UserType, user_uuid=graphene.String())
 
-    def resolve_all_users(self, info, **kwargs):
+    def resolve_users(self, info, **kwargs):
         return User.objects.all()
 
     def resolve_user(self, info, user_uuid):
@@ -42,43 +47,41 @@ class UserQuery(graphene.ObjectType):
 class UserInput(graphene.InputObjectType):
     first_name = graphene.String()
     last_name = graphene.String() 
-    username = graphene.String()
-    email = graphene.String()
+    username = graphene.String(required=True)
+    email = graphene.String(required=True)
     
 class CreateUser(graphene.Mutation):
     class Arguments:
-        user_data = UserInput(required = True)
+        data = UserInput(required = True)
         
     user = graphene.Field(UserType)
     
     @staticmethod
-    def mutate(root, info, user_data=None):
-        user_instance = User(
-            first_name=user_data.first_name,
-            last_name=user_data.last_name,
-            email=user_data.email,
-            username=user_data.username
+    def mutate(root, info, data=None):
+        user_instance = User.objects.create(
+            first_name=data.first_name,
+            last_name=data.last_name,
+            email=data.email,
+            username=data.username
         )
-        
-        user_instance.save()
         return CreateUser(user=user_instance)
     
 class UpdateUser(graphene.Mutation):
     class Arguments:
-        user_data = UserInput(required=True)
+        data = UserInput(required=True)
 
     user = graphene.Field(UserType)
 
     @staticmethod
-    def mutate(root, info, user_data=None):
+    def mutate(root, info, data=None):
 
-        user_instance = User.objects.get(uuid=user_data.uuid)
+        user_instance = User.objects.get(uuid=data.uuid)
 
         if user_instance:
-            user_instance.first_name=user_data.first_name,
-            user_instance.last_name=user_data.last_name,
-            user_instance.email=user_data.email,
-            user_instance.username=user_data.username
+            user_instance.first_name=data.first_name,
+            user_instance.last_name=data.last_name,
+            user_instance.email=data.email,
+            user_instance.username=data.username
             user_instance.save()
 
             return UpdateUser(user=user_instance)
@@ -94,13 +97,11 @@ class DeleteUser(graphene.Mutation):
     @staticmethod
     def mutate(root, info, uuid):
         user_instance = User.objects.get(uuid=uuid)
-        user_instance.delete()
+        if user_instance:
+            user_instance.delete()
         return None
     
 class UserMutation(graphene.ObjectType):
     create_user = CreateUser.Field()
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()
-
-
-schema = graphene.Schema(query=UserQuery, mutation=UserMutation)
