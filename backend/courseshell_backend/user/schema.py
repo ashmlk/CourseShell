@@ -9,6 +9,7 @@ class UserType(DjangoObjectType):
     
     full_name = graphene.String()
     course_count = graphene.Int()
+    review_count = graphene.Int()
     class Meta:
         model = User
         interfaces = (graphene.relay.Node,)
@@ -28,12 +29,16 @@ class UserType(DjangoObjectType):
     
     def resolve_course_count(self, info, **kwargs):
         return self.courses.count()
+    
+    def resolve_review_count(self, info, **kwargs):
+        return self.reviews.count()
+
 
 class UserQuery(graphene.ObjectType):
-    all_users = DjangoFilterConnectionField(UserType)
+    users = DjangoFilterConnectionField(UserType)
     user = graphene.Field(UserType, user_uuid=graphene.String())
 
-    def resolve_all_users(self, info, **kwargs):
+    def resolve_users(self, info, **kwargs):
         return User.objects.all()
 
     def resolve_user(self, info, user_uuid):
