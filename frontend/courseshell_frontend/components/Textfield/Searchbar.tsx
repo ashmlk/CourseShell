@@ -6,7 +6,7 @@ const CustomTextField = withStyles({
     root: {
         '& .MuiOutlinedInput-root': {
         '& fieldset': {
-            borderRadius: `25px`,
+            borderRadius: `50px`,
         },
         '&:hover fieldset': {
             borderColor: '#3574f2',
@@ -25,18 +25,10 @@ export default function Searchbar(props) {
             renderInput={(params) => (
                 <CustomTextField
                     {...params} 
-                    label="Search"
                     placeholder={`Search "CPS100 University of Toronto"...`} 
-                    margin="dense" 
+                    margin="normal" 
                     variant="outlined" 
                     size="medium"
-                    InputProps={{style: {
-                        height: '50px',
-                      
-                    }}}
-                    InputLabelProps={{style: {
-                        height: '50px',  
-                    }}}
                 />
             )}
             />
