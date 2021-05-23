@@ -30,11 +30,13 @@ INSTALLED_APPS = [
     'university.apps.UniversityConfig',
     'instructor.apps.InstructorConfig',
     
+    # cors headers
+    'corsheaders',
+    
     # rest framework
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'corsheaders',
     
     # graphql
     'django_filters',
@@ -60,6 +62,7 @@ USER_MODEL_MAX_USERNAME_LENGTH = 30
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -130,7 +133,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3080",
+    "http://localhost:3000",
     "http://127.0.0.1:8000"
 ]
 

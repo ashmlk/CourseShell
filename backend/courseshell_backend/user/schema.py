@@ -13,7 +13,7 @@ class UserType(DjangoObjectType):
     class Meta:
         model = User
         interfaces = (graphene.relay.Node,)
-        exclude =['id','password']
+        exclude =['password']
         filter_fields = {
             'uuid':['exact'],
             'username': ['exact','icontains', 'istartswith'],

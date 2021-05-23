@@ -2,6 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType, DjangoListField
 from graphene_django.filter import DjangoFilterConnectionField
 from .models import Course, Review
+from user.models import User
 import django_filters
 
 class CourseType(DjangoObjectType):
@@ -12,7 +13,6 @@ class CourseType(DjangoObjectType):
     class Meta: 
         model = Course
         interfaces = (graphene.relay.Node,)
-        exclude = ['id']
         filter_fields = {
           'uuid': ['exact'],
           'code': ['exact', 'icontains','istartswith'],
@@ -45,7 +45,6 @@ class ReviewType(DjangoObjectType):
     class Meta:
         model = Review
         interfaces = (graphene.relay.Node,)
-        exclude = ['id']
         filter_fields =  {
              'uuid': ['exact'],
              'course__code': ['exact', 'icontains','istartswith'],

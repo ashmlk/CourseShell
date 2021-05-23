@@ -1,33 +1,10 @@
 import React from 'react';
 import { Box, Container, createMuiTheme, createStyles, CssBaseline, Grid, makeStyles, MuiThemeProvider, Theme } from '@material-ui/core';
 import GuestUserNavbar from '../components/Navbar/GuestUser';
-import Searchbar from '../components/Textfield/Searchbar';
+import Searchbar from '../components/Search/Searchbar';
+import SearchbarText from '../components/Search/SearchbarText';
 import styles from '../styles/Home.module.css'
-
-
-export const darkTheme = createMuiTheme({
-  palette: {
-    type: "dark",
-    primary: {
-      main: "#3574f2",
-    },
-    secondary: {
-      main: "#612aad",
-    },
-  },
-});
-
-export const lightTheme = createMuiTheme({
-  palette: {
-    type: "light",
-    primary: {
-      main: "#3574f2",
-    },
-    secondary: {
-      main: "#612aad",
-    },
-  },
-});
+import { ApolloConsumer, HttpLink } from '@apollo/client';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,22 +16,42 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export default function CourseShellMain() {
+export default function CourseShellMain({
+  graphqlURL = undefined as string
+}) {
   return (
-    <MuiThemeProvider theme={lightTheme}>
       <div>
         <CssBaseline /> 
         <GuestUserNavbar />
         <Box display="flex" alignItems="center" justifyContent="center" height="90vh" width="100%">
           <Container>
-            <Box display="flex" alignItems="center" justifyContent="center" width="100%">
+            <Box mt={-10} width="100%">
+                <SearchbarText />
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="center">
               <Box width="100%" maxWidth="600px">
-                <Searchbar />
+                <ApolloConsumer>
+                  {(client) => {
+                    client.setLink(new HttpLink({ uri: graphqlURL }));
+                    return <Searchbar graphqlClient={client}/>;
+                  }}
+                </ApolloConsumer>
               </Box>
             </Box>
           </Container>
         </Box>
       </div>
-    </MuiThemeProvider>
   )
+}
+
+
+export const getServerSideProps = async ({req}) => {
+
+  const graphqlURL: string = process.env.GRAPHQL_API_URL;
+
+  return {
+    props: {
+      graphqlURL: graphqlURL
+    }, 
+  }
 }

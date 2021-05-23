@@ -10,13 +10,8 @@ import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    loginButton: {
-        textTransform: 'capitalize'
-    },
-    signupButton: {
-        backgroundColor: 'transparent',
+    button: {
         borderRadius: '25px',
-        borderColor: 'white',
         textTransform: 'capitalize'
     },
     title: {
@@ -29,14 +24,14 @@ export default function GuestUserNavbar(props) {
   const classes = useStyles();
 
   return (  
-      <AppBar position="sticky">
+      <AppBar style={{background: '#fafafa'}} elevation={0} position="sticky">
           <Container>
             <Toolbar>
-            <Typography variant="h6" className={classes.title}>
+            <Typography color="primary" variant="h6" className={classes.title}>
                 CourseShell
             </Typography>
-            <Button className={classes.loginButton} color="inherit">Login</Button>
-            <Button className={classes.signupButton} variant="outlined" color="inherit">Sign Up</Button>
+            <Button className={classes.button} color="primary">Login</Button>
+            <Button disableElevation className={classes.button} variant="contained" color="primary">Sign Up</Button>
             </Toolbar>
           </Container>
       </AppBar>
