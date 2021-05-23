@@ -13,7 +13,6 @@ class InstructorType(DjangoObjectType):
     class Meta: 
         model = Instructor
         interfaces = (graphene.relay.Node,)
-        exclude = ['id']
         filter_fields = {
             'first_name': ['exact', 'icontains','istartswith'],
             'last_name': ['exact', 'icontains','istartswith'],
